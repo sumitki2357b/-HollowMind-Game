@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>HollowMind</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="style.css">
+
+</head>
+
+<body>
+
+    <!-- CRT Overlay -->
+    <div id="crtOverlay"></div>
+
+    <div id="scanlines"></div>
+
+    <div id="glitchOverlay"></div>
+
+    <div id="flash"></div>
+    <div id="bloodOverlay"></div>
+    <div id="scratchOverlay"></div>
+
+
+    <!-- Main Container -->
+    <div id="gameContainer">
+       
+
+        <!-- ===================================== -->
+        <!-- CLICK TO START -->
+        <!-- ===================================== -->
+
+        <section id="clickScreen"
+                 class="screen active">
+
+            <img
+            id="mainLogo"
+            src="image/main.png"
+             alt="HollowMind">
+
+            <p class="blink">
+                CLICK ANYWHERE
+            </p>
+
+        </section>
+
+
+        <!-- ===================================== -->
+        <!-- BOOT SCREEN -->
+        <!-- ===================================== -->
+
+        <section id="bootScreen"
+                 class="screen hidden">
+
+            <pre id="bootText"></pre>
+
+        </section>
+
+
+        <!-- ===================================== -->
+        <!-- WARNING -->
+        <!-- ===================================== -->
+
+        <section id="warningScreen"
+                 class="screen hidden">
+
+            <h1 class="warningTitle">
+
+                UNAUTHORIZED ACCESS
+
+            </h1>
+
+            <p>
+
+                SECURITY BREACH DETECTED
+
+            </p>
+
+        </section>
+
+
+        <!-- ===================================== -->
+        <!-- TERMINAL -->
+        <!-- ===================================== -->
+
+        <section id="terminalScreen"
+                 class="screen hidden">
+
+            <h1>
+
+                RECOVERY TERMINAL
+
+            </h1>
+
+            <div class="terminalBox">
+
+                <div class="terminalOption">
+
+                    [1]
+
+                    MAX MAYFIELD
+
+                    <span class="red">
+
+                        CORRUPTED
+
+                    </span>
+
+                </div>
+
+                <div class="terminalOption selected">
+
+                    [2]
+
+                    HAWKINS LAB
+
+                    <span class="green">
+
+                        ACCESSIBLE
+
+                    </span>
+
+                </div>
+
+                <div class="terminalOption">
+
+                    [3]
+
+                    ENCRYPTED FILE
+
+                    <span class="yellow">
+
+                        LOCKED
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            <p class="blink">
+
+                PRESS ENTER
+
+            </p>
+
+        </section>
+<!-- ===================================== -->
+<!-- OPERATOR LOGIN -->
+<!-- ===================================== -->
+
+<section id="operatorScreen"
+         class="screen hidden">
+
+    <h1 class="gameTitle">
+
+        OPERATOR LOGIN
+
+    </h1>
+
+    <p class="operatorText">
+
+        ENTER OPERATOR ID
+
+    </p>
+
+    <input
+        id="operatorName"
+        type="text"
+        maxlength="20"
+        placeholder="OPERATOR ID">
+
+    <button id="operatorSubmit">
+
+        AUTHENTICATE
+
+    </button>
+
+</section>
+
+        <!-- ===================================== -->
+        <!-- INSTRUCTIONS -->
+        <!-- ===================================== -->
+
+        <section id="instructionScreen"
+                 class="screen hidden">
+
+            <button id="closeInstructions">
+
+                ✕
+
+            </button>
+
+            <h1>
+
+                HAWKINS LAB
+
+            </h1>
+
+            <h2>
+
+                SURVEILLANCE RECOVERY
+
+            </h2>
+
+            <div class="instructionBox">
+
+                <h3>
+
+                    OBJECTIVE
+
+                </h3>
+
+                <p>
+
+                    Restore every surveillance camera
+                    by matching all memory fragments.
+
+                </p>
+
+                <h3>
+
+                    HOW TO PLAY
+
+                </h3>
+
+                <ul>
+
+                    <li>Memorize every card.</li>
+
+                    <li>Cards flip automatically.</li>
+
+                    <li>Match every pair.</li>
+
+                    <li>Wrong match loses one heart.</li>
+
+                    <li>You have 3 lives.</li>
+
+                    <li>Beat the timer.</li>
+
+                    <li>Complete all 4 levels.</li>
+
+                </ul>
+
+            </div>
+
+            <button id="startMission">
+
+                BEGIN RECOVERY
+
+            </button>
+
+        </section>
+
+
+        <!-- ===================================== -->
+        <!-- GAMEPLAY -->
+        <!-- ===================================== -->
+
+        <section id="gameScreen"
+                 class="screen hidden">
+                  <video id="levelVideo"
+           autoplay
+           muted
+           loop
+           playsinline
+           preload="auto">
+
+        <source src="red_sky.mp4"
+                type="video/mp4">
+
+    </video>
+
+            <header id="hud">
+
+    <div id="lives">
+        ❤️
+        <span class="hudTitle">LIVES</span>
+        <span id="lifeCount">3</span>
+    </div>
+
+    <div id="level">
+        📷
+        <span class="hudTitle">CAMERA</span>
+        <span id="cameraLevel">01</span>
+    </div>
+
+    <div id="timer">
+        ⏱
+        <span class="hudTitle">TIME LEFT</span>
+        <span id="timeValue">00:30</span>
+    </div>
+
+</header>
+
+
+<div id="leftPanel">
+
+    <div class="panelTitle">
+        OPERATOR
+    </div>
+
+    <div id="operatorDisplay">
+        UNKNOWN
+    </div>
+
+    <br>
+
+    <div class="panelTitle">
+        THREAT
+    </div>
+
+    <div id="threatLevel">
+        LOW
+    </div>
+
+</div>
+
+<main id="gameBoard">
+
+</main>
+
+<div id="rightPanel">
+
+    <div class="panelTitle">
+        STATUS
+    </div>
+
+    <div id="statusText">
+        MONITORING...
+    </div>
+
+</div>
+
+
+        </section>
+
+
+        <!-- ===================================== -->
+        <!-- CAMERA RESTORED -->
+        <!-- ===================================== -->
+
+        <section id="cameraScreen"
+                 class="screen hidden">
+
+            <h1>
+
+                CAMERA NODE RESTORED
+
+            </h1>
+
+            <div id="cameraNumber">
+
+                NODE 1
+
+            </div>
+
+            <p>
+
+                SIGNAL STABLE
+
+            </p>
+
+        </section>
+
+
+        <!-- ===================================== -->
+        <!-- GAME OVER -->
+        <!-- ===================================== -->
+
+        <section id="gameOverScreen"
+                 class="screen hidden">
+
+            <h1>
+
+                GAME OVER
+
+            </h1>
+
+            <p>
+
+                MISSION FAILED
+
+            </p>
+
+            <div class="endButtons">
+
+    <button id="restartGame">
+
+    PLAY AGAIN
+
+    </button>
+
+    <button id="newOperatorGameOver">
+
+    NEW OPERATOR
+
+    </button>
+
+    <button id="leaderboardGameOver">
+
+    GLOBAL LEADERBOARD
+
+    </button>
+
+    </div>
+
+        </section>
+
+<!-- ===================================== -->
+<!-- WIN / LEADERBOARD -->
+<!-- ===================================== -->
+
+<section id="winScreen"
+         class="screen hidden">
+
+    <h1>
+
+        MISSION COMPLETED
+
+    </h1>
+
+    <p class="winSubtitle">
+
+        ALL CAMERA NODES HAVE BEEN RESTORED
+
+    </p>
+
+    <!-- Mission Report -->
+
+    <div id="leaderBoard">
+
+        <h2>
+
+            MISSION REPORT
+
+        </h2>
+
+        <div class="resultRow">
+
+            <span>OPERATOR</span>
+
+            <span id="resultOperator">
+
+                UNKNOWN
+
+            </span>
+
+        </div>
+
+        <div class="resultRow">
+
+            <span>TIME REMAINING</span>
+
+            <span id="resultTime">
+
+                00:00
+
+            </span>
+
+        </div>
+
+        <div class="resultRow">
+
+            <span>LIVES LEFT</span>
+
+            <span id="resultLives">
+
+                3
+
+            </span>
+
+        </div>
+
+        <div class="resultRow">
+
+            <span>CAMERAS RESTORED</span>
+
+            <span id="resultCamera">
+
+                4 / 4
+
+            </span>
+
+        </div>
+
+        <div class="resultRow">
+
+            <span>MATCH ACCURACY</span>
+
+            <span id="resultAccuracy">
+
+                100%
+
+            </span>
+
+        </div>
+
+        <div class="resultRow">
+
+            <span>FINAL RANK</span>
+
+            <span id="finalRank">
+
+                SURVIVOR
+
+            </span>
+
+        </div>
+
+    </div>
+
+    
+
+    <div class="endButtons">
+
+    <button id="replayGame">
+
+    PLAY AGAIN
+
+    </button>
+
+    <button id="newOperatorWin">
+
+    NEW OPERATOR
+
+    </button>
+
+    <button id="leaderboardWin">
+
+    GLOBAL LEADERBOARD
+
+    </button>
+
+    </div>
+
+</section>
+
+<!-- ===================================== -->
+<!-- GLOBAL LEADERBOARD -->
+<!-- ===================================== -->
+
+<section id="leaderboardScreen"
+class="screen hidden">
+
+<button id="closeLeaderboard"
+class="closeLeader">
+
+✕
+
+</button>
+
+<h1>
+
+GLOBAL LEADERBOARD
+
+</h1>
+
+<table id="leaderboardTable">
+
+    <thead>
+
+        <tr>
+
+            <th>#</th>
+            <th>Operator</th>
+            <th>Level</th>
+            <th>Lives</th>
+            <th>Accuracy</th>
+            <th>Time</th>
+            <th>Status</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody id="leaderboardBody">
+    </tbody>
+
+</table>
+
+</section>
+        
+    </div>
+
+    <!-- Scripts -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/supabase.js"></script>
+
+<script src="js/utils.js"></script>
+
+<script src="js/levels.js"></script>
+
+<script src="js/audio.js"></script>
+
+<script src="js/effects.js"></script>
+
+<script src="js/game.js"></script>
+
+<script src="js/ui.js"></script>
+
+<script src="js/script.js"></script>
+
+</body>
+
+</html>
